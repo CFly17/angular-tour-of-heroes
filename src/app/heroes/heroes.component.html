@@ -1,0 +1,44 @@
+
+<h2>My Heroes</h2>
+<ul class="heroes">
+    <li *ngFor="let hero of heroes">
+        <!-- <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)"> -->
+            <!-- The parentheses around click tell Angular to listen for the <button> element's click event.-->
+            <!-- When the user clicks in the <button>, Angular executes the 'onSelect(hero)' expression. -->
+            <!-- <span class="badge">{{hero.id}}</span>
+            <span class="name">{{hero.name}}</span> -->
+        <!-- </button> -->
+        <a routerLink="/detail/{{hero.id}}">
+            <span class="badge">{{hero.id}}</span> {{hero.name}}
+        </a>
+    </li>
+</ul>
+
+<!--V1-->
+<!-- 
+<h2>{{hero.name | uppercase}} Details</h2>
+<div><span>id: </span>{{hero.id}}</div>
+<div><span>name: </span>{{hero.name}}</div>
+
+<div>
+    <label for="name">Hero name: </label>
+    <input id="name" [(ngModel)]="hero.name" placeholder="name">
+</div> -->
+
+
+
+<!--binding to 'hero' property-->
+<!--It's a one way data binding from the selectedHero property of the HeroesComponent 
+    to the hero property of the target element, which maps to the hero property of the HeroDetailComponent.-->
+
+<!--Now when the user clicks a hero in the list, the selectedHero changes. 
+    When the selectedHero changes, the property binding updates 'hero' 
+    and the 'HeroDetailComponent' displays the new hero.-->
+
+        <!--This change allows us to 
+            1. reduce HeroesComponent responsibilities.
+            2. evolve HeroDetailComponent into a rich hero editor without touching the parent HeroesComponent
+            3. evolve HeroesComponent without touching the hero detail view
+            4. re-use HeroDetailComponent in the template of some future component.-->
+
+<!-- <app-hero-detail [hero]="selectedHero"></app-hero-detail> -->
