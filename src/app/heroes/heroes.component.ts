@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
-import { MessageService } from '../message.service';
+//import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-heroes',
@@ -45,6 +45,29 @@ export class HeroesComponent implements OnInit {
   getHeroes(): void {
     this.heroService.getHeroes()
         .subscribe(heroes => this.heroes = heroes);
+  }
+
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.heroService.addHero({ name } as Hero)
+      .subscribe(hero => {
+        this.heroes.push(hero);
+      });
+  }
+
+  //Although the component delegates hero deletion to the HeroService, 
+    //it remains responsible for updating its own list of heroes.
+  
+  //There's really nothing for the component to do with the Observable
+    //returned by heroService.deleteHero() but it must subscribe anyway.
+  
+  //If you neglect to subscribe(), the service will not send the delete request to the server.
+    // As a rule, an Observable does nothing until something subscribes.
+  
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero.id).subscribe();
   }
 
 }
